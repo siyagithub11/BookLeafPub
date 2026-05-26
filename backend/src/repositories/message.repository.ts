@@ -7,7 +7,7 @@ export class MessageRepository {
     return Message.find({ ticketId: new Types.ObjectId(ticketId) })
       .populate("senderId", "name role authorId")
       .sort({ createdAt: 1 })
-      .lean() as Promise<IMessage[]>;
+      .lean() as unknown as Promise<IMessage[]>;
   }
 
   async create(data: {
@@ -33,10 +33,14 @@ export class InternalNoteRepository {
     return InternalNote.find({ ticketId: new Types.ObjectId(ticketId) })
       .populate("adminId", "name")
       .sort({ createdAt: 1 })
-      .lean() as Promise<IInternalNote[]>;
+      .lean() as unknown as Promise<IInternalNote[]>;
   }
 
-  async create(data: { ticketId: string; adminId: string; note: string }): Promise<IInternalNote> {
+  async create(data: {
+    ticketId: string;
+    adminId: string;
+    note: string;
+  }): Promise<IInternalNote> {
     const note = new InternalNote({
       ticketId: new Types.ObjectId(data.ticketId),
       adminId: new Types.ObjectId(data.adminId),

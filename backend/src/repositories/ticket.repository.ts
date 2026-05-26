@@ -33,7 +33,7 @@ export class TicketRepository {
       Ticket.countDocuments(query),
     ]);
 
-    return { tickets: tickets as ITicket[], meta: buildPaginationMeta(pagination.page, pagination.limit, total) };
+    return { tickets: tickets  as unknown as  ITicket[], meta: buildPaginationMeta(pagination.page, pagination.limit, total) };
   }
 
   async findByIdForAuthor(ticketId: string, authorId: string): Promise<ITicket | null> {
@@ -71,7 +71,7 @@ export class TicketRepository {
       Ticket.countDocuments(query),
     ]);
 
-    return { tickets: tickets as ITicket[], meta: buildPaginationMeta(pagination.page, pagination.limit, total) };
+    return { tickets: tickets  as unknown as  ITicket[], meta: buildPaginationMeta(pagination.page, pagination.limit, total) };
   }
 
   async findByIdForAdmin(ticketId: string): Promise<ITicket | null> {

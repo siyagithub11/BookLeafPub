@@ -5,12 +5,11 @@ import { Types } from "mongoose";
 import { Book, IBook } from "../models/Book.model";
 
 export class BookRepository {
-  async findByAuthor(authorId: string): Promise<IBook[]> {
-    return Book.find({ authorId: new Types.ObjectId(authorId) })
-      .sort({ createdAt: -1 })
-      .lean() as Promise<IBook[]>;
-  }
-
+ async findByAuthor(authorId: string): Promise<IBook[]> {
+  return Book.find({ authorId: new Types.ObjectId(authorId) })
+    .sort({ createdAt: -1 })
+    .lean() as unknown as Promise<IBook[]>;
+}
   async findByIdForAuthor(bookId: string, authorId: string): Promise<IBook | null> {
     return Book.findOne({
       _id: new Types.ObjectId(bookId),

@@ -1,8 +1,5 @@
 node_modules
-.next
-out
-.env
-.env.local
 dist
+.env
 coverage
 *.log

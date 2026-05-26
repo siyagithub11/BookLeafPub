@@ -22,7 +22,8 @@ export class UserRepository {
   }
 
   async findAllByRole(role: UserRole): Promise<IUser[]> {
-    return User.find({ role }).lean() as Promise<IUser[]>;
+    return (await User.find({ role }).lean().exec()) as unknown as IUser[];
+
   }
 
   async create(data: Partial<IUser>): Promise<IUser> {
