@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express from "express";
+import express, { Request } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -39,8 +39,8 @@ app.use(
   if (env.NODE_ENV !== "test") {
     app.use(
       morgan("combined", {
-        stream: { write: (msg) => logger.http(msg.trim()) },
-        skip: (req) => req.path === "/api/v1/health",
+        stream: { write: (msg: string) => logger.http(msg.trim()) },
+skip: (req: Request) => req.path === "/api/v1/health",
       })
     );
   }
