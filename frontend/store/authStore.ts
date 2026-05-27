@@ -1,17 +1,18 @@
 "use client";
+
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { User } from "@/types";
 
 interface AuthState {
   user: User | null;
-  token: string | null; // only used for socket auth — JWT lives in httpOnly cookie
+  token: string | null;
   isAuthenticated: boolean;
   isHydrated: boolean;
 
   setUser: (user: User, token?: string) => void;
   clearUser: () => void;
-  setHydrated: () => void;
+  setHydrated: (value: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -23,23 +24,37 @@ export const useAuthStore = create<AuthState>()(
       isHydrated: false,
 
       setUser: (user, token) =>
-        set({ user, token: token ?? null, isAuthenticated: true }),
+        set({
+          user,
+          token: token ?? null,
+          isAuthenticated: true,
+        }),
 
       clearUser: () =>
-        set({ user: null, token: null, isAuthenticated: false }),
+        set({
+          user: null,
+          token: null,
+          isAuthenticated: false,
+        }),
 
-      setHydrated: () => set({ isHydrated: true }),
+      setHydrated: (value) =>
+        set({
+          isHydrated: value,
+        }),
     }),
     {
       name: "bookleaf-auth",
-      // Only persist non-sensitive fields — actual auth is via httpOnly cookie
+
       partialize: (state) => ({
         user: state.user,
-        token: state.token, // socket needs this
+        token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),
-      onRehydrateStorage: () => (state) => {
-        state?.setHydrated();
+
+      onRehydrateStorage: () => {
+        return (state) => {
+          state?.setHydrated(true);
+        };
       },
     }
   )
