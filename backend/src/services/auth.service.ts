@@ -56,13 +56,13 @@ export class AuthService {
     res.cookie("token", token, {
       httpOnly: true,
       secure: env.COOKIE_SECURE,
-      sameSite: "strict",
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
   }
 
   clearCookieToken(res: Response): void {
-    res.clearCookie("token", { httpOnly: true, secure: env.COOKIE_SECURE, sameSite: "strict" });
+    res.clearCookie("token", { httpOnly: true, secure: env.COOKIE_SECURE, sameSite: "none" });
   }
 }
 
