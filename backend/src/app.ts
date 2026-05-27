@@ -24,15 +24,12 @@ async function bootstrap() {
       crossOriginResourcePolicy: { policy: "cross-origin" },
     })
   );
-
-  app.use(
-    cors({
-      origin: env.CLIENT_URL,
-      credentials: true,
-      methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
-      allowedHeaders: ["Content-Type", "Authorization"],
-    })
-  );
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
   // ─── Parsing & Logging ─────────────────────────────────────────────────────
   app.use(express.json({ limit: "2mb" }));
