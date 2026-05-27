@@ -51,19 +51,22 @@ export class AuthService {
       { expiresIn: "7d" }
     );
   }
+setCookieToken(res: Response, token: string): void {
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none" as const,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+}
 
-  setCookieToken(res: Response, token: string): void {
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: env.COOKIE_SECURE,
-      sameSite: "none",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-  }
-
-  clearCookieToken(res: Response): void {
-    res.clearCookie("token", { httpOnly: true, secure: env.COOKIE_SECURE, sameSite: "none" });
-  }
+clearCookieToken(res: Response): void {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none" as const,
+  });
+}
 }
 
 export const authService = new AuthService();
