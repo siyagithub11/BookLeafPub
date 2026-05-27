@@ -1,5 +1,5 @@
 
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { authenticate, authorize } from "../middleware/authenticate";
 import { validate, validateObjectId } from "../middleware/errorHandler";
 import { authRateLimiter, aiRateLimiter } from "../middleware/rateLimiter";
@@ -17,8 +17,7 @@ import * as ticketCtrl from "../controllers/ticket.controller";
 const router = Router();
 
 // ─── Health ───────────────────────────────────────────────────────────────────
-
-router.get("/health", (_req, res) => {
+router.get("/health", (_req: Request, res: Response) => {
   res.json({ success: true, status: "ok", timestamp: new Date().toISOString() });
 });
 
